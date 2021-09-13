@@ -1,1 +1,1 @@
-# algorithm
+# for algorithm study
