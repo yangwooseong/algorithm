@@ -1,25 +1,22 @@
 /**
- * @param {string[]} logs
- * @return {string[]}
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
  */
- var reorderLogFiles = function(logs) {
-  let digits = []
-  let letters = []
-  logs.forEach(log => {
-    isNaN(log.split(' ')[1]) ? letters.push(log) : digits.push(log)
-  })  
-  letters.sort((a,b) => {
-    const contentA = a.split(' ').slice(1).join(' ')
-    const contentB = b.split(' ').slice(1).join(' ') 
-    if(contentA !== contentB) {
-      return contentA > contentB ? 1 : -1
-    }
-    else {
-      return a.split(' ')[0] > b.split(' ')[0] ? 1 : -1
-    }
-  })
-  return letters.concat(digits)
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+ var isPalindrome = function(head) {
+  while(head.length >= 2) {
+      const a = head.shift()
+      const b = head.pop()
+      console.log(a, b)
+      if(a !== b) return false
+  }
+  return true
 };
 
-const logs = ["a1 act car","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"]
-reorderLogFiles(logs)
+isPalindrome([1,2,2,1])
