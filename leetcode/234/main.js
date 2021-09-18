@@ -52,4 +52,19 @@ var isPalindrome = function (head) {
   return !rev
 }
 
+var isPalindrome = function (head) {
+  let rev = null
+  let slow = head
+  let fast = head
+  while (fast && fast.next) {
+    fast = fast.next.next
+    const next = slow.next
+    slow.next = rev
+    rev = slow
+    slow = next
+  }
+  console.log(slow, rev)
+  return !rev
+}
+
 // runner 를 활용한 풀이법도 익혀보자.. 나중에
