@@ -1,6 +1,8 @@
 import sys
 input = sys.stdin.readline
 MAX = 100000
+
+# key: number of last digit, value: possible cases
 dp = [{1: 0, 2: 0, 3: 0} for _ in range(MAX+1)]
 dp[1][1] = 1
 dp[2][2] = 1
