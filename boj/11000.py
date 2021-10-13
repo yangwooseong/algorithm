@@ -1,7 +1,19 @@
-n = int(input())
-arr = []
-for _ in range(n):
-    arr.append(list(map(int, input())))
-arr.sort(key=lambda x: x[1])
+import heapq
+import sys
 
-count = [0 for _ in range(1, arr[-1][1]+1)]
+N = int(input())
+
+timeTable = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+timeTable.sort(key=lambda x: x[0])
+
+queue = []
+heapq.heappush(queue, timeTable[0][1])
+
+for i in range(1, N):
+    if queue[0] > timeTable[i][0]:
+        heapq.heappush(queue, timeTable[i][1])
+    else:
+        heapq.heappop(queue)
+        heapq.heappush(queue, timeTable[i][1])
+
+print(len(queue))
