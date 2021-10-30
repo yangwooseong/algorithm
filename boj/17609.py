@@ -3,29 +3,32 @@ input = sys.stdin.readline
 
 n = int(input())
 
+
+def second_check(word, left, right):
+    while left < right:
+        if word[left] == word[right]:
+            left += 1
+            right -= 1
+        else:
+            return False
+    return True
+
+
 for _ in range(n):
-    word = list(input().rstrip())
-    start, end = 0, len(word) - 1
-    is_palindrome = 0
-    chance = 1
+    word = input().rstrip()
+    start, end = 0, len(word)-1
     while start < end:
         if word[start] == word[end]:
             start += 1
             end -= 1
-        else:
-            if not chance:
-                is_palindrome = 2
-                break
-            if word[start + 1] == word[end] and word[start + 2] == word[end - 1]:
-                start += 2
-                end -= 1
-            elif word[start] == word[end-1] and word[start + 1] == word[end - 2]:
-                start += 1
-                end -= 2
+        elif word[start] != word[end]:
+            check1 = second_check(word, start+1, end)
+            check2 = second_check(word, start, end-1)
+            if check1 or check2:
+                print(1)
             else:
-                is_palindrome = 2
-                break
-            chance -= 1
-            is_palindrome = 1
-        # print(start, end)
-    print(is_palindrome)
+                print(2)
+            break
+
+    if start >= end:
+        print(0)
