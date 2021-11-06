@@ -1,53 +1,25 @@
-from collections import deque
-
-n, s, m = list(map(int, input().split()))
-volumes = list(map(int, input().split()))
-
-# dp 를 이용한 풀이
-
-# dp = [[0] * (m+1) for _ in range(n+1)]
-# dp[0][s] = 1
-
-# for i in range(n):
-#     for j in range(m+1):
-#         if dp[i][j]:
-#             if j + volumes[i] <= m:
-#                 dp[i+1][j+volumes[i]] = 1
-#             if j - volumes[i] >= 0:
-#                 dp[i+1][j-volumes[i]] = 1
-
-# ans = - 1
-# for i in range(m, -1 ,-1):
-#     if dp[-1][i] == 1:
-#         ans = i
-#         break
-
-# print(ans)
-
-# bfs 를 이용한 풀이
+N, e, w, s, n = list(map(int, input().split()))
+total = 0
+dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+probs = [e, w, s, n]
 
 
-def bfs():
-    queue = deque([s])
-    cnt = 0
-    while queue:
-        next_queue = deque()
-        for q in queue:
-            nq = q + volumes[cnt]
-            if 0 <= nq <= m and nq not in next_queue:
-                next_queue.append(nq)
-            nq = q - volumes[cnt]
-            if 0 <= nq <= m and nq not in next_queue:
-                next_queue.append(nq)
-        queue = next_queue
-        cnt += 1
-        if cnt == n:
-            if len(queue) == 0:
-                print(-1)
-            else:
-                print(max(queue))
-            return
-    print(-1)
+def dfs(x, y, prob, visited):
+    global total
+
+    # print(x, y, prob, visited)
+
+    if len(visited) == N+1:
+        total += prob
+        return
+
+    for d in range(len(dirs)):
+        nx, ny = x + dirs[d][0], y + dirs[d][1]
+        if (nx, ny) not in visited:
+            visited.append((nx, ny))
+            dfs(nx, ny, prob*probs[d], visited)
+            visited.pop()
 
 
-bfs()
+dfs(N, N, 1, [(N, N)])
+print(total * (0.01**N))
