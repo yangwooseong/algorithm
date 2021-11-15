@@ -8,7 +8,7 @@ var orangesRotting = function (grid) {
     const dy = [1, 0, -1, 0]
     let visited = new Array(grid.length)
     let cnt = 0
-    for (let i = 0; i < grid[0].length; i++) {
+    for (let i = 0; i < grid.length; i++) {
       visited[i] = new Array(grid[0].length).fill(0)
     }
     while (queue.length > 0) {
@@ -56,10 +56,3 @@ var orangesRotting = function (grid) {
   }
   return bfs()
 }
-
-const grid = [
-  [2, 1, 1],
-  [1, 1, 0],
-  [0, 1, 1],
-]
-console.log(orangesRotting(grid))
