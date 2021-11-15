@@ -13,7 +13,6 @@ function solution(genres, plays) {
         }
   }
   let sortedArray = Object.values(obj).sort((a, b) => b.sum - a.sum)
-  // console.log(sortedArray)
   sortedArray = sortedArray.map((val) => {
     let songs = val.songs
     songs.sort((a, b) => {
@@ -30,8 +29,6 @@ function solution(genres, plays) {
       answer.push(sortedArray[i][j][0])
     }
   }
-  // console.log(sortedArray)
-  // console.log(answer)
 
   return answer
 }
