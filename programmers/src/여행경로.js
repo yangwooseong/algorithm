@@ -1,33 +1,35 @@
 function solution(tickets) {
-  const t = tickets.slice()
-  t.sort((a, b) => {
-    return a[1] - b[1]
-  })
+  let answer = []
+  const result = []
+  const visited = []
+  const len = tickets.length
 
-  const graph = {}
-  for (let v of t) {
-    if (graph[v[0]] === undefined) {
-      graph[v[0]] = [[v[1], false]]
-    } else {
-      graph[v[0]].push([v[1], false])
+  tickets.sort()
+  console.log(tickets)
+
+  const dfs = (str, count) => {
+    result.push(str)
+    if (count === len) {
+      answer = result.slice()
+      return true
     }
-  }
 
-  console.log(graph)
-  const path = []
-  const traverse = (current) => {
-    if (graph[current] === undefined) return
-    path.push(current)
-    for (let city of graph[current]) {
-      if (city[1] === false) {
-        city[1] = true
-        traverse(city[0])
+    console.log(str)
+    for (let i = 0; i < len; i++) {
+      if (!visited[i] && tickets[i][0] === str) {
+        visited[i] = true
+        if (dfs(tickets[i][1], count + 1)) return true
+        visited[i] = false
       }
     }
+
+    result.pop()
+    return false
   }
 
-  traverse('ICN')
-  return path
+  dfs('ICN', 0)
+
+  return answer
 }
 
 const cities = [
@@ -35,5 +37,4 @@ const cities = [
   ['HND', 'IAD'],
   ['JFK', 'HND'],
 ]
-
 console.log(solution(cities))
