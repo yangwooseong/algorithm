@@ -18,6 +18,4 @@ function solution(word) {
   return answer
 }
 
-console.log(solution('I'))
-
 solution1('AAAAE')
