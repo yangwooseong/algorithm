@@ -1,6 +1,7 @@
 var kthSmallest = function (root, k) {
   let answer
   const inorder = (node) => {
+    console.log(node)
     if (!node) return
     inorder(node.left)
     k -= 1
