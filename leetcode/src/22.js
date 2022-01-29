@@ -1,31 +1,29 @@
-/**
- * @param {number} n
- * @return {string[]}
- */
-var generateParenthesis = function (n) {
-  let stack = []
-  let res = []
+let generateParenthesis = (n) => {
+  const answer = []
 
-  function backtrack(openN, closeN) {
-    if (openN === n && closeN === n) {
-      res.push(stack.join(''))
+  const dfs = (open, closed, current) => {
+    if (open === n && closed === n) {
+      console.log(current)
+      answer.push(current.join(''))
+      return
     }
 
-    if (openN < n) {
-      stack.push('(')
-      backtrack(openN + 1, closeN)
-      stack.pop()
+    if (open < n) {
+      current.push('(')
+      dfs(open + 1, closed, current)
+      current.pop()
     }
 
-    if (closeN < openN) {
-      stack.push(')')
-      backtrack(openN, closeN + 1)
-      stack.pop()
+    if (open > closed) {
+      current.push(')')
+      dfs(open, closed + 1, current)
+      current.pop()
     }
   }
 
-  backtrack(0, 0)
-  return res
+  dfs(0, 0, [])
+  console.log(answer)
+  return answer
 }
 
-// generateParenthesis(4)
+generateParenthesis(3)
