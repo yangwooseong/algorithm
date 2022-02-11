@@ -1,1 +1,1 @@
-Solving 120 ~ 150 leetcode problems monthly
+Solving about 100 leetcode problems monthly
