@@ -1,33 +1,57 @@
-var QueueProto = Object.create(Array.prototype)
-QueueProto.enqueue = Array.prototype.push
-QueueProto.dequeue = Array.prototype.shift
-QueueProto.front = function () {
-  if (this.length !== undefined && this.length > 0) {
-    return this[0]
+var MyQueue = function () {
+  this.stack1 = []
+  this.stack2 = []
+}
+
+/**
+ * @param {number} x
+ * @return {void}
+ */
+MyQueue.prototype.push = function (x) {
+  this.stack1.push(x)
+}
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.pop = function () {
+  if (!this.stack2.length) {
+    while (this.stack1.length) {
+      this.stack2.push(this.stack1.pop())
+    }
   }
+  return this.stack2.pop()
 }
 
-var MyStack = function () {
-  this.queue = Object.create(QueueProto)
-}
-
-MyStack.prototype.push = function (x) {
-  this.queue.push(x)
-  const length = this.queue.length
-  for (i = 0; i < length - 1; i++) {
-    const first = this.queue.dequeue()
-    this.queue.enqueue(first)
+/**
+ * @return {number}
+ */
+MyQueue.prototype.peek = function () {
+  if (!this.stack2.length) {
+    while (this.stack1.length) {
+      this.stack2.push(this.stack1.pop())
+    }
   }
+  return this.stack2[this.stack2.length - 1]
 }
 
-MyStack.prototype.pop = function () {
-  return this.queue.dequeue()
+/**
+ * @return {boolean}
+ */
+MyQueue.prototype.empty = function () {
+  return this.stack1.length + this.stack2.length === 0
 }
 
-MyStack.prototype.top = function () {
-  return this.queue.front()
-}
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * var obj = new MyQueue()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.peek()
+ * var param_4 = obj.empty()
+ */
 
-MyStack.prototype.empty = function () {
-  return this.queue.length === 0
-}
+// [1, 2, 3] -> [3, 2, 1] ->  // stack
+// [1, 2, 3] -> dequeue() -> 1
+// [1, 2, 3] -> [3, 2, 1] -> pop() 1
+// [1, 2, 3] -> 1, 2, 3 // queue
