@@ -4,16 +4,16 @@
  */
  var find132pattern = function(nums) {
   const stack = []
-  let min = Infinity
+  let min = nums[0]
 
   for (const num of nums) {
-      while (stack.length && num > stack[stack.length - 1]) {
+      while (stack.length && num >= stack[stack.length - 1][0]) {
           stack.pop()
       }
 
-      if (stack.length && num > min) { return true }
+      if (stack.length && stack[stack.length-1][1] < num) { return true }
 
-      stack.push(num)
+      stack.push([num, min])
       min = Math.min(num, min)
   }
 
