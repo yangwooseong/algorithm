@@ -8,18 +8,15 @@
   const heights = [..._heights, 0]
 
   for (let i=0;i<heights.length;i++) {
-      let last = null
+      let start = i
       while (stack.length && stack[stack.length-1][1] > heights[i]) {
-          last = stack.pop()
+          const [idx, height] = stack.pop()
 
-          max = Math.max(max, (i - last[0]) * last[1])
+          max = Math.max(max, (i - idx) * height)
+          start = idx
       }
 
-      if (last) {
-          stack.push([last[0], heights[i]])
-      } else {
-          stack.push([i, heights[i]])
-      }
+      stack.push([start, heights[i]])
   }
   
   return max
