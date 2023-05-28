@@ -1,50 +1,35 @@
 /**
- * @param {string[][]} equations
- * @param {number[]} values
- * @param {string[][]} queries
- * @return {number[]}
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
  */
-var calcEquation = function(equations, values, queries) {
-    const n = equations.length
-    const graph = {}
+var numSubseq = function(nums, target) {
+  const divider = 10**9 + 7
+  const n = nums.length
+  const pow = [1]
 
-   for (let i=0;i<n;i++) {
-       const [to, from] = equations[i]
-       if (!graph[from]) { 
-           graph[from] = {}
-       }
+  nums.sort((a, b) => a - b)
 
-       if (!graph[to]) {
-           graph[to] = {}
-       }
+  for(let i = 1;i < nums.length;i++){
+      pow.push((pow[pow.length-1]*2) % mod);
+  }
 
-       graph[from][to] = values[i]
-       graph[to][from] = 1 / values[i]
-   }
+  let left = 0
+  let right = n - 1
+  let ans = 0
 
-   const dfs = (node, cur, to, visited) => {
-       if (visited.has(node) || !graph[node]) { return null }
-       visited.add(node)
-       if (node === to) { return cur * 1 }
+  while (left < n) {
+      while (nums[left] + nums[right] > target) {
+          right -= 1
+      }
 
-       for (const neighbor of Object.keys(graph[node])) {
-           const res = dfs(neighbor, cur * graph[node][neighbor], to, visited)
+      if (right >= left) {
+          ans += pow[right-left]
+          ans %= divider
+      }
 
-           if (res !== null) { return res }
-       }
+      left += 1
+  }
 
-       return null
-   }
-
-    const ans = []
-   for (const query of queries) {
-        const value = dfs(query[1], 1, query[0], new Set())
-        if (value !== null) {
-            ans.push(value)
-        } else {
-            ans.push(-1)
-        }
-   }
-
-   return ans
+  return ans
 };
